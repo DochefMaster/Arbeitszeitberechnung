@@ -13,6 +13,7 @@ def umrechnung_zeit(zeit_dezimal):
 anzahl_arbeitstage_pro_woche: Wird vom User eingegeben
 arbeits_pensum: Wird vom User eingegeben
 arbeitstage_ferien: Wird aus mehreren Eingaben im GUI berechnet
+arbeitsferien_woche: Wird vom User eingegeben
 vorhandene_ueberzeit: Wird vom User eingegeben
 brueckentage_frei: Wird vom User eingegeben
 """
@@ -23,7 +24,7 @@ def berechnung_arbeitsstunden_tag(anzahl_arbeitstage_pro_woche, arbeits_pensum, 
     arbeitsstunden_jahr_teilzeit = ARBEITSSTUNDEN_JAHR_VOLLZEIT * arbeits_pensum / 100 - vorhandene_ueberzeit
     # Das komplette Jahr (Arbeitstage) auf x Tagewoche skalieren
     arbeitstage_jahr_teilzeit = ARBEITSTAGE_JAHR_5T * (anzahl_arbeitstage_pro_woche / 5)
-    # Zwischenrechnung wie viele Tage man zusätzlich noch weg ist, über die bezahlten ferien hinaus
+    # Effekte Zeit die aufgeholt werden muss berechnen
     schulferien_unbezahlt_tage_teilzeit = (SCHULFERIEN_WOCHEN - arbeitsferien_woche) * anzahl_arbeitstage_pro_woche
     abwesenheit_schulferien_tage = schulferien_unbezahlt_tage_teilzeit - arbeitstage_ferien + brueckentage_frei
     # Tagessoll berechnen mit allen Abhängigkeiten
