@@ -20,6 +20,6 @@ pensum_label.pack(pady=(10,20))
 pensum_input = ctk.CTkEntry(app, placeholder_text="z.B. 4", width=200)
 pensum_input.pack(pady=(0,10))
 
-# Die endlose Ereignisschleife starten
+# Die endlose Ereignisschleife starten dd
 if __name__ == "__main__":
     app.mainloop()
