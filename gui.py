@@ -17,6 +17,9 @@ titel_label.pack(pady=20)
 pensum_label = ctk.CTkLabel(app,text="Arbeitspensum (%):")
 pensum_label.pack(pady=(10,20))
 
+pensum_input = ctk.CTkEntry(app, placeholder_text="z.B. 4", width=200)
+pensum_input.pack(pady=(0,10))
+
 # Die endlose Ereignisschleife starten
 if __name__ == "__main__":
     app.mainloop()
