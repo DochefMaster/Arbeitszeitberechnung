@@ -45,6 +45,12 @@ def button_klick():
                                  text_color="#a33b3b"
         )
 
+def maus_betritt(event):
+    info_pensum.configure(text="Test!")
+
+def maus_verlassen(event):
+    info_pensum.configure(text="")
+
 
 # Titel erstellen
 titel_label = ctk.CTkLabel(app, text="Arbeitszeit-Berechnung", font=("Arial",20, "bold"))
@@ -55,7 +61,12 @@ pensum_label = ctk.CTkLabel(app, text="Arbeitspensum (%):")
 pensum_label.pack(pady=(0, ABSTAND_EINGABEFELD))
 
 pensum_input = ctk.CTkEntry(app, placeholder_text="10...100", width=100)
-pensum_input.pack(pady=(0, ABSTAND_THEMENWECHSEL))
+pensum_input.pack(pady=(0, ABSTAND_EINGABEFELD))
+
+info_pensum = ctk.CTkLabel(app, text="", font=("Arial", 12, "italic"), text_color="gray")
+info_pensum.pack(pady=(0, 0))
+
+
 
 # Eingabe: Anzahl Wochen Ferien
 ferien_label = ctk.CTkLabel(app, text="Anzahl Ferienwochen:")
@@ -104,6 +115,11 @@ berechnen_button.pack(pady=(0, ABSTAND_THEMENWECHSEL))
 
 ergebnis_label = ctk.CTkLabel(app, text="Tages-Soll: -- Std. -- Min.", font=("Arial", 18, "bold"), text_color="#1f6aa5")
 ergebnis_label.pack(pady=(0, ABSTAND_THEMENWECHSEL))
+
+
+#Events verknüpfen
+pensum_label.bind("<Enter>", maus_betritt)
+pensum_label.bind("<Leave>", maus_verlassen)
 
 
 # Die endlose Ereignisschleife starten dd
