@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from berechnung import berechnung_arbeitsstunden_tag
 
 ABSTAND_THEMENWECHSEL = 20
 ABSTAND_EINGABEFELD = 2
@@ -10,7 +11,40 @@ ctk.set_default_color_theme("blue")  # Setzt das Farbthema für Knöpfe und Feld
 # Das Hauptfenster initialisieren
 app = ctk.CTk()
 app.title("Arbeitszeitberechnung")
-app.geometry("450x800")
+app.geometry("450x750")
+
+# Callback funktion. Logik was passiert, wenn der Button gedrückt wird
+def button_klick():
+    try:
+        # Daten auslesen aus den feldern
+        pensum = int(pensum_input.get())
+        ferienwochen = int(ferien_input.get())
+        arbeitstage = int(tage_input.get())
+        ferienarbeit = int(ferienarbeit_input.get())
+        bruecktag = int(bruecktag_input.get())
+        ueberzeit = float(ueberzeit_input.get())
+
+        # Daten an Funktion übergeben
+        soll_stunden, soll_minuten = berechnung_arbeitsstunden_tag(
+            arbeitstage,
+            pensum,
+            ferienarbeit,
+            ferienwochen,
+            ueberzeit,
+            bruecktag
+        )
+
+        #Ausgabelabel mit der berechneten Zeit aktualisieren
+        ergebnis_label.configure(text=f"Tages-Soll: {soll_stunden} Std. {soll_minuten} Min.",
+                              text_color="#2b712b"
+        )
+
+    except ValueError:
+        #Falls eine Eingabe nicht stimmt
+        ergebnis_label.configure(text=f"Fehler: Bitte alle Felder korrekt ausfüllen",
+                                 text_color="#a33b3b"
+        )
+
 
 # Titel erstellen
 titel_label = ctk.CTkLabel(app, text="Arbeitszeit-Berechnung", font=("Arial",20, "bold"))
@@ -65,7 +99,7 @@ ueberzeit_input.pack(pady=(0,ABSTAND_THEMENWECHSEL))
 trenner = ctk.CTkFrame(app, height=2, width=400)
 trenner.pack(pady=(0,ABSTAND_THEMENWECHSEL))
 
-berechnen_button = ctk.CTkButton(app, text="Berechnen", width=200, height=40, font=("Arial", 14, "bold"))
+berechnen_button = ctk.CTkButton(app, text="Berechnen", width=200, height=40, font=("Arial", 14, "bold"), command=button_klick)
 berechnen_button.pack(pady=(0, ABSTAND_THEMENWECHSEL))
 
 ergebnis_label = ctk.CTkLabel(app, text="Tages-Soll: -- Std. -- Min.", font=("Arial", 18, "bold"), text_color="#1f6aa5")
