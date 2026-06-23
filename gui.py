@@ -1,8 +1,70 @@
 import customtkinter as ctk
+from dataclasses import dataclass
+from typing import Dict
 from berechnung import berechnung_arbeitsstunden_tag
 
 ABSTAND_THEMENWECHSEL = 20
 ABSTAND_EINGABEFELD = 2
+
+
+
+# ---Bauplan für Kantonsstruktur erstellen.---
+# Erster Schritt: Klasse für die verschiedenen Anstellungsmodelle
+@dataclass
+class ModellDaten:
+    arbeitsstunden: float
+    arbeitstage: int
+
+# Zweiter schritt:Klasse für die Jahresdaten erstellen
+@dataclass
+class JahresDaten:
+    modelle: Dict[int, ModellDaten]
+
+# Dritter Schritt: Klasse für Kanton, mit Klasse Jahresdaten, erstellen
+@dataclass
+class Kanton:
+    name: str
+    jahre: Dict[int, JahresDaten]
+
+# --- Neue Klasse der Kantone mit Daten füllen ---
+kantons_daten = {
+    "Zug": Kanton(
+        name="Zug",
+        jahre={
+            2026: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2100, arbeitstage=250),
+                    43: ModellDaten(arbeitsstunden=2150, arbeitstage=250)
+                }
+            ),
+            2027: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2108.4, arbeitstage=251),
+                    43: ModellDaten(arbeitsstunden=2158.6, arbeitstage=251)
+                }
+            ),
+            2028: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2091.6, arbeitstage=249),
+                    43: ModellDaten(arbeitsstunden=2141.4, arbeitstage=249)
+                }
+            ),
+            2029: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2074.8, arbeitstage=247),
+                    43: ModellDaten(arbeitsstunden=2124.2, arbeitstage=247)
+                }
+            ),
+            2030: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2074.8, arbeitstage=247),
+                    43: ModellDaten(arbeitsstunden=2124.2, arbeitstage=247)
+                }
+            )
+        }
+    )
+}
+
 
 # Standard-Design festlegen
 ctk.set_appearance_mode("System")  # Übernimmt den hellen/dunklen Modus des Betriebssystems
@@ -11,7 +73,12 @@ ctk.set_default_color_theme("blue")  # Setzt das Farbthema für Knöpfe und Feld
 # Das Hauptfenster initialisieren
 app = ctk.CTk()
 app.title("Arbeitszeitberechnung")
-app.geometry("450x750")
+app.geometry("500x750")
+
+# Daten für Dropdown menu definieren
+jahreszahlen_optionen = ["2026", "2027", "2028", "2029", "2030"]
+kantone_optionen = ["Zug", "t.b.d."]
+anstellung_optionen = ["42", "43"]
 
 # Callback funktion. Logik was passiert, wenn der Button gedrückt wird
 def button_klick():
@@ -23,6 +90,12 @@ def button_klick():
         ferienarbeit = int(ferienarbeit_input.get())
         bruecktag = int(bruecktag_input.get())
         ueberzeit = float(ueberzeit_input.get())
+        mein_kanton = kantons_daten[dropdown_kanton.get()]
+        arbeitstage_jahr = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[
+            int(dropdown_anstellung.get())].arbeitstage
+        arbeitstunden_jahr = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[
+            int(dropdown_anstellung.get())].arbeitsstunden
+
 
         # Daten an Funktion übergeben
         soll_stunden, soll_minuten = berechnung_arbeitsstunden_tag(
@@ -31,7 +104,9 @@ def button_klick():
             ferienarbeit,
             ferienwochen,
             ueberzeit,
-            bruecktag
+            bruecktag,
+            arbeitstage_jahr,
+            arbeitstunden_jahr
         )
 
         #Ausgabelabel mit der berechneten Zeit aktualisieren
@@ -48,7 +123,29 @@ def button_klick():
 
 # Titel erstellen
 titel_label = ctk.CTkLabel(app, text="Arbeitszeit-Berechnung", font=("Arial",20, "bold"))
-titel_label.pack(pady=(20,30))
+titel_label.pack(pady=(20,10))
+
+# Allgemeine Infos einblenden
+grid_infos = ctk.CTkFrame(app)
+grid_infos.pack(pady=(0, ABSTAND_THEMENWECHSEL))
+
+info_jahr_label = ctk.CTkLabel(grid_infos, text="Jahr: ")
+info_jahr_label.grid(row=0, column=0, padx=(10, ABSTAND_EINGABEFELD), pady=5)
+dropdown_jahr = ctk.CTkOptionMenu(grid_infos, values=jahreszahlen_optionen, width=80)
+dropdown_jahr.set("2026")
+dropdown_jahr.grid(row=0, column=1, padx=(0,ABSTAND_THEMENWECHSEL))
+
+info_anstellung_label = ctk.CTkLabel(grid_infos, text="Std./Woche: ")
+info_anstellung_label.grid(row=0, column=2, padx=(0, ABSTAND_EINGABEFELD), pady=5)
+dropdown_anstellung = ctk.CTkOptionMenu(grid_infos, values=anstellung_optionen, width=80)
+dropdown_anstellung.set("42")
+dropdown_anstellung.grid(row=0, column=3, padx=(ABSTAND_EINGABEFELD, ABSTAND_THEMENWECHSEL), pady=5)
+
+info_kanton_label = ctk.CTkLabel(grid_infos, text="Kanton: ")
+info_kanton_label.grid(row=0, column=4, padx=(0, ABSTAND_EINGABEFELD), pady=5)
+dropdown_kanton = ctk.CTkOptionMenu(grid_infos, values=kantone_optionen, width=80)
+dropdown_kanton.set("Zug")
+dropdown_kanton.grid(row=0, column=5, padx=(ABSTAND_EINGABEFELD, 10), pady=5)
 
 # Eingabe: Pensum
 pensum_label = ctk.CTkLabel(app, text="Arbeitspensum (%):")
