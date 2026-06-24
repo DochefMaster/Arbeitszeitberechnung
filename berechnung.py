@@ -12,11 +12,12 @@ def umrechnung_zeit(zeit_dezimal):
 """
 anzahl_arbeitstage_pro_woche: Wird vom User eingegeben
 arbeits_pensum: Wird vom User eingegeben
-arbeitstage_ferien: Wird aus mehreren Eingaben im GUI berechnet
-arbeitsferien_woche: Wird vom User eingegeben
+arbeitstage_ferien: Wird aus mehreren Eingaben im GUI berechnet, wie viele Tage in den Ferien gearbeitet wird.
+arbeitsferien_woche: Wird vom User eingegeben, wie viel wochen bezahlte ferien der User hat
 vorhandene_ueberzeit: Wird vom User eingegeben
-brueckentage_frei: Wird vom User eingegeben
-Jahr: Wird vom Dropdown menu ausgewählt
+brueckentage_frei: Wird vom User eingegeben, Brückentage die Frei genommen werden
+jahresarbeit_tage: Wird von der Datenbank genommen
+jahresarbeit_stunden: Wird von der Datenbank genommen
 """
 
 

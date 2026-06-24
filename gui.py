@@ -79,13 +79,16 @@ app.geometry("500x750")
 jahreszahlen_optionen = ["2026", "2027", "2028", "2029", "2030"]
 kantone_optionen = ["Zug", "t.b.d."]
 anstellung_optionen = ["42", "43"]
+bezahlte_ferien_optionen = ["4 Wochen (20 Tage)", "5 Wochen (25 Tage)", "6 Wochen (30 Tage)"]
 
 # Callback funktion. Logik was passiert, wenn der Button gedrückt wird
 def button_klick():
     try:
         # Daten auslesen aus den feldern
         pensum = int(pensum_input.get())
-        ferienwochen = int(ferien_input.get())
+        wort_liste = dropdown_ferien_input.get().split()
+        #print(wort_liste[0])
+        ferienwochen = int(wort_liste[0])
         arbeitstage = int(tage_input.get())
         ferienarbeit = int(ferienarbeit_input.get())
         bruecktag = int(bruecktag_input.get())
@@ -152,14 +155,20 @@ pensum_label = ctk.CTkLabel(app, text="Arbeitspensum (%):")
 pensum_label.pack(pady=(0, ABSTAND_EINGABEFELD))
 
 pensum_input = ctk.CTkEntry(app, placeholder_text="10...100", width=100)
+pensum_input.insert(0, "70")
 pensum_input.pack(pady=(0, ABSTAND_THEMENWECHSEL))
 
 # Eingabe: Anzahl Wochen Ferien
-ferien_label = ctk.CTkLabel(app, text="Anzahl Ferienwochen:")
+ferien_label = ctk.CTkLabel(app, text="Anzahl bezahlte Ferienwochen:")
 ferien_label.pack(pady=(0, ABSTAND_EINGABEFELD))
 
+"""
 ferien_input = ctk.CTkEntry(app, placeholder_text="z.B. 5", width=100)
 ferien_input.pack(pady=(0, ABSTAND_EINGABEFELD))
+"""
+
+dropdown_ferien_input = ctk.CTkOptionMenu(app, values=bezahlte_ferien_optionen)
+dropdown_ferien_input.pack(pady=(0, ABSTAND_EINGABEFELD))
 
 ferien_info_label = ctk.CTkLabel(app, text="Bitte die Angabe aus Siaxma verwenden im Monatsraport vom Januar (FEKA).", font=("Arial",11))
 ferien_info_label.pack(pady=(0,ABSTAND_THEMENWECHSEL))
