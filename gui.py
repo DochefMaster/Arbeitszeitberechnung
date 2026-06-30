@@ -13,7 +13,6 @@ ABSTAND_EINGABEFELD = 2
 @dataclass
 class ModellDaten:
     arbeitsstunden: float
-    arbeitstage: int
 
 # Zweiter schritt:Klasse für die Jahresdaten erstellen
 @dataclass
@@ -33,32 +32,32 @@ kantons_daten = {
         jahre={
             2026: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2100, arbeitstage=250),
-                    43: ModellDaten(arbeitsstunden=2150, arbeitstage=250)
+                    42: ModellDaten(arbeitsstunden=2100),
+                    43: ModellDaten(arbeitsstunden=2150)
                 }
             ),
             2027: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2108.4, arbeitstage=251),
-                    43: ModellDaten(arbeitsstunden=2158.6, arbeitstage=251)
+                    42: ModellDaten(arbeitsstunden=2108.4,),
+                    43: ModellDaten(arbeitsstunden=2158.6,)
                 }
             ),
             2028: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2091.6, arbeitstage=249),
-                    43: ModellDaten(arbeitsstunden=2141.4, arbeitstage=249)
+                    42: ModellDaten(arbeitsstunden=2091.6,),
+                    43: ModellDaten(arbeitsstunden=2141.4,)
                 }
             ),
             2029: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2074.8, arbeitstage=247),
-                    43: ModellDaten(arbeitsstunden=2124.2, arbeitstage=247)
+                    42: ModellDaten(arbeitsstunden=2074.8,),
+                    43: ModellDaten(arbeitsstunden=2124.2,)
                 }
             ),
             2030: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2074.8, arbeitstage=247),
-                    43: ModellDaten(arbeitsstunden=2124.2, arbeitstage=247)
+                    42: ModellDaten(arbeitsstunden=2074.8,),
+                    43: ModellDaten(arbeitsstunden=2124.2,)
                 }
             )
         }
@@ -94,10 +93,9 @@ def button_klick():
         bruecktag = int(bruecktag_input.get())
         ueberzeit = float(ueberzeit_input.get())
         mein_kanton = kantons_daten[dropdown_kanton.get()]
-        arbeitstage_jahr = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[
-            int(dropdown_anstellung.get())].arbeitstage
         arbeitstunden_jahr = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[
             int(dropdown_anstellung.get())].arbeitsstunden
+        arbeits_modell = int(dropdown_anstellung.get())
 
 
         # Daten an Funktion übergeben
@@ -108,8 +106,8 @@ def button_klick():
             ferienwochen,
             ueberzeit,
             bruecktag,
-            arbeitstage_jahr,
-            arbeitstunden_jahr
+            arbeitstunden_jahr,
+            arbeits_modell
         )
 
         #Ausgabelabel mit der berechneten Zeit aktualisieren
