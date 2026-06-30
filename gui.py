@@ -61,6 +61,46 @@ kantons_daten = {
                 }
             )
         }
+    ),
+    "Bern": Kanton(
+        name="Bern",
+        jahre={
+            2026: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2122.2),
+                    43: ModellDaten(arbeitsstunden=0)
+                }
+            ),
+            2027: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=2140),
+                    43: ModellDaten(arbeitsstunden=0)
+
+                }
+            ),
+            2028: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=0),
+                    43: ModellDaten(arbeitsstunden=0)
+
+                }
+            ),
+            2029: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=0),
+                    43: ModellDaten(arbeitsstunden=0)
+
+                }
+            ),
+            2030: JahresDaten(
+                modelle={
+                    42: ModellDaten(arbeitsstunden=0),
+                    43: ModellDaten(arbeitsstunden=0)
+
+                }
+            )
+        }
+
     )
 }
 
@@ -76,7 +116,7 @@ app.geometry("500x750")
 
 # Daten für Dropdown menu definieren
 jahreszahlen_optionen = ["2026", "2027", "2028", "2029", "2030"]
-kantone_optionen = ["Zug", "t.b.d."]
+kantone_optionen = ["Zug", "Bern", "t.b.d."]
 anstellung_optionen = ["42", "43"]
 bezahlte_ferien_optionen = ["4 Wochen (20 Tage)", "5 Wochen (25 Tage)", "6 Wochen (30 Tage)"]
 
