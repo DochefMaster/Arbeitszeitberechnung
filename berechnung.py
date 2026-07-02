@@ -1,7 +1,5 @@
 # Daten für das Jahr 2026
-#ARBEITSTAGE_JAHR_5T = 250  # Mit 100% Anstellung und 5 Wochen Ferien
-#ARBEITSSTUNDEN_JAHR_VOLLZEIT = 2100  # Mit 100% Anstellung und 5 Wochen Ferien
-SCHULFERIEN_WOCHEN = 14  # Aus Jahresplan
+
 
 
 def umrechnung_zeit(zeit_dezimal):
@@ -18,13 +16,15 @@ vorhandene_ueberzeit: Wird vom User eingegeben
 brueckentage_frei: Wird vom User eingegeben, Brückentage die Frei genommen werden
 jahresarbeit_tage: Wird von der Datenbank genommen
 jahresarbeit_stunden: Wird von der Datenbank genommen
+schulferien_wochen: Wird von der Datenbank genommen
 """
 
 
-def berechnung_arbeitsstunden_tag(anzahl_arbeitstage_pro_woche, arbeits_pensum, arbeitstage_ferien, arbeitsferien_woche, vorhandene_ueberzeit=0, brueckentage_frei=0, jahresarbeit_stunden=0, arbeismodell = 42):
+def berechnung_arbeitsstunden_tag(anzahl_arbeitstage_pro_woche, arbeits_pensum, arbeitstage_ferien, arbeitsferien_woche, vorhandene_ueberzeit=0, brueckentage_frei=0, jahresarbeit_stunden=0, arbeismodell=42, schulferien_wochen=0):
     # Anzahl Arbeitstage aus Jahresstunden berechnen
     standard_tages_stunden_vollzeit = arbeismodell / 5 #Tagessoll bei 100% anstellung berechnen
     jahresarbeit_tage = jahresarbeit_stunden / standard_tages_stunden_vollzeit #Anzahl Tage bei 100% anstellung
+    print(jahresarbeit_tage)
 
     # Jahressoll auf auf Pensum skalieren
     arbeitsstunden_jahr_teilzeit = jahresarbeit_stunden * arbeits_pensum / 100 - vorhandene_ueberzeit
@@ -33,7 +33,7 @@ def berechnung_arbeitsstunden_tag(anzahl_arbeitstage_pro_woche, arbeits_pensum, 
     arbeitstage_jahr_teilzeit = jahresarbeit_tage * (anzahl_arbeitstage_pro_woche / 5)
 
     # Effekte Zeit die aufgeholt werden muss berechnen
-    schulferien_unbezahlt_tage_teilzeit = (SCHULFERIEN_WOCHEN - arbeitsferien_woche) * anzahl_arbeitstage_pro_woche
+    schulferien_unbezahlt_tage_teilzeit = (schulferien_wochen - arbeitsferien_woche) * anzahl_arbeitstage_pro_woche
     abwesenheit_schulferien_tage = schulferien_unbezahlt_tage_teilzeit - arbeitstage_ferien + brueckentage_frei
 
     # Tagessoll berechnen mit allen Abhängigkeiten

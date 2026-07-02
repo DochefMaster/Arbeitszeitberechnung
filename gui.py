@@ -13,6 +13,7 @@ ABSTAND_EINGABEFELD = 2
 @dataclass
 class ModellDaten:
     arbeitsstunden: float
+    schulferien: int
 
 # Zweiter schritt:Klasse für die Jahresdaten erstellen
 @dataclass
@@ -32,32 +33,32 @@ kantons_daten = {
         jahre={
             2026: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2100),
-                    43: ModellDaten(arbeitsstunden=2150)
+                    42: ModellDaten(arbeitsstunden=2100, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=2150, schulferien=14)
                 }
             ),
             2027: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2108.4,),
-                    43: ModellDaten(arbeitsstunden=2158.6,)
+                    42: ModellDaten(arbeitsstunden=2108.4, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=2158.6, schulferien=14)
                 }
             ),
             2028: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2091.6,),
-                    43: ModellDaten(arbeitsstunden=2141.4,)
+                    42: ModellDaten(arbeitsstunden=2091.6, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=2141.4, schulferien=14)
                 }
             ),
             2029: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2074.8,),
-                    43: ModellDaten(arbeitsstunden=2124.2,)
+                    42: ModellDaten(arbeitsstunden=2074.8, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=2124.2, schulferien=14)
                 }
             ),
             2030: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2074.8,),
-                    43: ModellDaten(arbeitsstunden=2124.2,)
+                    42: ModellDaten(arbeitsstunden=2074.8, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=2124.2, schulferien=14)
                 }
             )
         }
@@ -67,35 +68,35 @@ kantons_daten = {
         jahre={
             2026: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2122.2),
-                    43: ModellDaten(arbeitsstunden=0)
+                    42: ModellDaten(arbeitsstunden=2122.2, schulferien=13),
+                    43: ModellDaten(arbeitsstunden=0, schulferien=13)
                 }
             ),
             2027: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=2140),
-                    43: ModellDaten(arbeitsstunden=0)
+                    42: ModellDaten(arbeitsstunden=2140, schulferien=14),
+                    43: ModellDaten(arbeitsstunden=0, schulferien=14)
 
                 }
             ),
             2028: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=0),
-                    43: ModellDaten(arbeitsstunden=0)
+                    42: ModellDaten(arbeitsstunden=0, schulferien=0),
+                    43: ModellDaten(arbeitsstunden=0, schulferien=0)
 
                 }
             ),
             2029: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=0),
-                    43: ModellDaten(arbeitsstunden=0)
+                    42: ModellDaten(arbeitsstunden=0, schulferien=0),
+                    43: ModellDaten(arbeitsstunden=0, schulferien=0)
 
                 }
             ),
             2030: JahresDaten(
                 modelle={
-                    42: ModellDaten(arbeitsstunden=0),
-                    43: ModellDaten(arbeitsstunden=0)
+                    42: ModellDaten(arbeitsstunden=0, schulferien=0),
+                    43: ModellDaten(arbeitsstunden=0, schulferien=0)
 
                 }
             )
@@ -136,6 +137,7 @@ def button_klick():
         arbeitstunden_jahr = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[
             int(dropdown_anstellung.get())].arbeitsstunden
         arbeits_modell = int(dropdown_anstellung.get())
+        schulferien_wochen = mein_kanton.jahre[int(dropdown_jahr.get())].modelle[int(dropdown_anstellung.get())].schulferien
 
 
         # Daten an Funktion übergeben
@@ -147,7 +149,8 @@ def button_klick():
             ueberzeit,
             bruecktag,
             arbeitstunden_jahr,
-            arbeits_modell
+            arbeits_modell,
+            schulferien_wochen
         )
 
         #Ausgabelabel mit der berechneten Zeit aktualisieren
